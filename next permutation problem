@@ -1,0 +1,53 @@
+  // IF DIGITS ARE IN DECREASING ORDER , IN THAT CASE PERMUTATION GREATER THAN GIVEN IS NOT POSSIBLE.
+    
+    // IN CASE IF POSSIBLE, START TRAVERSING FROM RIGHT , BCZ WE NEED SMALLEST GREATER THAN THIS , AND STOP WHEN YOU FIND ARR[I]>ARR[I-1].
+    
+    // NOW IN RIGHT OF I , FIND SMALLEST DIGIT GREATER THAN ARR[I],AND SWAP THESE TWO
+    
+    // NOW DEFINITELY, THIS PERMUTATION IS GREATER THAN GIVEN ONE , BUT TO MAKE IT SMALLEST OUT OF ALL GREATER PERMUTATIONS , SORT THE DIGITS IN RIGHT OF I IN ASCENDING ORDER....
+    
+    void nextPermutation(vector<int>& nums) {
+        int n=nums.size();
+        int flag=0;
+        for(int i=n-1;i>0;i--)
+        {
+            if(nums[i]>nums[i-1])
+            {
+                flag=1;
+                
+                int j=i;
+                int temp=j;
+                int diff=nums[i]-nums[i-1];
+                while(j<n)
+                {
+                    if(nums[j]>nums[i-1])
+                    {
+                        if(nums[j]-nums[i-1]<diff)
+                        {
+                            diff=nums[j]-nums[i-1];
+                            temp=j;
+                        }
+                            
+                    }
+                    j++;
+                }
+                swap(nums[i-1],nums[temp]);
+                // **SOMETHING NEW TO SORT ONLY A PARTICULAR PART OF VECTOR....
+               std::sort( nums.begin()+i, std::next( nums.end() -1));
+                break;
+                
+            }
+            
+        }
+        //In case if given array is in descending order and no greater permutation is possible, then return smallest permutation(just reverse).
+        if(flag==0)
+        {
+            int i=0,j=nums.size()-1;
+            while(i<j)
+            {
+                swap(nums[i],nums[j]);
+                i++;
+                j--;
+                
+            }
+        }
