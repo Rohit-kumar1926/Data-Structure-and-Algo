@@ -1,0 +1,54 @@
+ //problem is to find if an element in given array exist with a frequency greater than n/2?
+ // there could be multiple approach to find this problem :- 1.Brute Force: run two for loops and count frequency of each element and at any point if frequency 
+ // become grater than n/2 , print and break;
+ //2. better : sort in nlog(n) time and do counting 
+ //3. another better : use hash_map , it is easiest one with time complexity as O(n) but aux_space as O(n) .
+ //4. best soln: Moore's Voting Algorithm . according to this , we find majority element in two steps 
+ // Watch code below along with comments ;
+ 
+ 
+ // this function is to guess if there is a majority element.
+ 
+ int guessIndex(int arr[],int size)
+    {
+        int count=1;
+        int maj_in=0;
+        for(int i=1;i<size;i++)
+        {
+            if(arr[i]==arr[maj_in])count++;
+            else{
+                count--;
+                if(count==0)
+                {
+                    maj_in=i;
+                    count=1;
+                    
+                }
+            }
+            
+        }
+        return maj_in;
+    }
+    
+    // this function is to confirm if guessed element is a majority element in actual.
+    
+    int confirmIfMajority(int arr[],int size,int maj_in)
+    {
+        int count=0;
+        for(int i=0;i<size;i++)
+        {
+            if(arr[i]==arr[maj_in])count++;
+        }
+        return(count>size/2);
+    }
+    
+    int majorityElement(int a[], int size)
+    {
+        int maj_in=guessIndex(a,size);
+        int ans=confirmIfMajority(a,size,maj_in);
+        if(ans==1)return a[maj_in];
+        else return -1;
+       
+        
+        
+    }
